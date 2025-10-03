@@ -220,3 +220,17 @@ The solution will display:
 3. **Performance**: Add indexing for large datasets
 4. **Validation**: Add data validation and consistency checks
 5. **Logging**: Add detailed logging for debugging purposes
+
+## Sample Output
+
+Below is a screenshot of the application running in Docker container, showing the complete execution of all three tasks:
+
+![DWH Challenge Output](solution/output-screenshot.png)
+
+The output demonstrates:
+
+- **Task 1**: Historical table views for accounts, cards, and savings accounts tables
+- **Task 2**: Denormalized joined table combining all three tables
+- **Task 3**: Comprehensive transaction analysis with 8 detected transactions
+
+_Note: The screenshot shows the actual Docker container execution with all formatting and tabular displays as specified in the requirements._
