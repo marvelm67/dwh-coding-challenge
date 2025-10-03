@@ -12,7 +12,7 @@ import glob
 
 class EventLogProcessor:
     """
-    Process event logs dan buat historical table views
+    Process event logs and create historical table views
     """
 
     def __init__(self, data_dir):
@@ -23,11 +23,11 @@ class EventLogProcessor:
 
     def load_and_process_table(self, table_name):
         """
-        Load JSON files untuk satu table dan process jadi final state
+        Load JSON files to process the table into its final state
         """
         table_path = os.path.join(self.data_dir, table_name)
         
-        # Load JSON files dan sort by timestamp
+        # Load JSON files and sort by timestamp
         json_files = glob.glob(os.path.join(table_path, "*.json"))
         json_files.sort(key=lambda x: int(os.path.basename(x).replace('.json', '')))
         
@@ -37,7 +37,7 @@ class EventLogProcessor:
             with open(file_path, 'r') as f:
                 events.append(json.load(f))
         
-        # Process events jadi final state
+        # Process events into final state
         records = {}
         for event in events:
             record_id = event.get('id')
@@ -150,10 +150,10 @@ class EventLogProcessor:
     # ============================================================================
 
     def analyze_transactions(self):
-        """Analisa transactions berdasarkan perubahan balance dan credit_used"""
+        """Analyse transactions based on changes on the balance and credit_used"""
         transactions = []
         
-        # Analisa card transactions (credit_used changes)
+        # Analyse card transactions (credit_used changes)
         cards_events = self.load_and_process_table_events('cards')
         for event in cards_events:
             if event.get('op') == 'u' and 'credit_used' in event.get('set', {}):
@@ -166,7 +166,7 @@ class EventLogProcessor:
                     'description': f"Credit used updated to {event['set']['credit_used']}"
                 })
         
-        # Analisa savings account transactions (balance changes)
+        # Analyse savings account transactions (balance changes)
         savings_events = self.load_and_process_table_events('savings_accounts')
         for event in savings_events:
             if event.get('op') == 'u' and 'balance' in event.get('set', {}):
@@ -179,12 +179,12 @@ class EventLogProcessor:
                     'description': f"Balance updated to {event['set']['balance']}"
                 })
         
-        # Sort transactions by timestamp
+        # Sort transactions by the timestamp
         transactions.sort(key=lambda x: x['timestamp'])
         return transactions
     
     def load_and_process_table_events(self, table_name):
-        """Helper function untuk load events aja tanpa processing"""
+        """Helper function for load events"""
         table_path = os.path.join(self.data_dir, table_name)
         json_files = glob.glob(os.path.join(table_path, "*.json"))
         json_files.sort(key=lambda x: int(os.path.basename(x).replace('.json', '')))
@@ -207,13 +207,11 @@ class EventLogProcessor:
 
 
 def main():
-    """Main function untuk execute semua tasks sesuai README.md"""
     print("=" * 80)
     print("DWH CODING CHALLENGE SOLUTION")
     print("=" * 80)
     
-    # Initialize processor dengan data directory
-    # Coba current directory dulu (untuk Docker), terus parent directory (untuk local)
+    # Initialize processor with directory data
     current_dir_data = os.path.join(os.path.dirname(__file__), 'data')
     parent_dir_data = os.path.join(os.path.dirname(__file__), '..', 'data')
     
@@ -229,7 +227,7 @@ def main():
     
     processor = EventLogProcessor(data_dir)
     
-    # Load dan process semua event logs dari JSON files
+    # Load and process all the event logs from JSON files
     processor.process_all_tables()
     
     # ============================================================================
@@ -288,7 +286,7 @@ def main():
     print("TASK 2: DENORMALIZED JOINED TABLE")
     print("=" * 80)
     
-    # Task 2: Create dan show denormalized joined table
+    # Task 2: Create and show denormalized joined table
     print("\nDENORMALIZED VIEW (Accounts + Cards + Savings Accounts):")
     print("=" * 150)
     denormalized_df = processor.create_denormalized_view()
@@ -314,7 +312,7 @@ def main():
     print("TASK 3: TRANSACTION ANALYSIS")
     print("=" * 80)
     
-    # Task 3: Analyze semua transactions
+    # Task 3: Analyze all the transactions
     transactions = processor.analyze_transactions()
     
     print(f"\n📊 TRANSACTION SUMMARY:")
