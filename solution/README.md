@@ -225,7 +225,7 @@ The solution will display:
 
 Below is a screenshot of the application running in Docker container, showing the complete execution of all three tasks:
 
-![DWH Challenge Output](solution/output-screenshot.png)
+![DWH Challenge Output](output-screenshot.png)
 
 The output demonstrates:
 
