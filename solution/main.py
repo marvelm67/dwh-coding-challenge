@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 DWH Coding Challenge Solution
-Mengerjakan 3 task sesuai README.md dengan event sourcing pattern
 """
 
 import json
@@ -58,14 +57,14 @@ class EventLogProcessor:
         return records
 
     def process_all_tables(self):
-        """Process semua tables sekaligus"""
+        """Process all tables"""
         print("🔄 Processing accounts table...")
         self.accounts = self.load_and_process_table('accounts')
         
-        print("🔄 Processing cards table...")
+        print("🔄 Processing cards tables")
         self.cards = self.load_and_process_table('cards')
         
-        print("🔄 Processing savings_accounts table...")
+        print("🔄 Processing savings_accounts tables")
         self.savings = self.load_and_process_table('savings_accounts')
 
     def create_dataframe(self, records):
@@ -77,7 +76,7 @@ class EventLogProcessor:
         for record_id, record_data in records.items():
             row = {'id': record_id, **record_data}
             
-            # Convert timestamp jadi format yang readable
+            # Convert timestamp into readable format
             for ts_key in ['created_at', 'last_updated']:
                 if ts_key in row and isinstance(row[ts_key], (int, float)):
                     row[ts_key] = datetime.fromtimestamp(row[ts_key] / 1000).strftime('%Y-%m-%d %H:%M:%S')
