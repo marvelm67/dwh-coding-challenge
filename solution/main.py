@@ -204,7 +204,7 @@ class EventLogProcessor:
             return self.accounts[record_id].get(field, 'Unknown')
         return 'Unknown'
 
-
+# Main program to execute tasks
 def main():
     print("=" * 80)
     print("DWH CODING CHALLENGE SOLUTION")
